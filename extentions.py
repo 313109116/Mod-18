@@ -32,3 +32,5 @@ class CryptoConverter:
         total_base = r.json()[base_ticker]
 
         return total_base * amount
+
+

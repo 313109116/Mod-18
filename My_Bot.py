@@ -1,8 +1,7 @@
 import telebot
-# import requests
-# import json
+
 from config import keys, TOKEN
-from extentions import ConvertoinException, CryptoConverter
+from extentions import ConvertionException, CryptoConverter
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -32,20 +31,13 @@ def convert(message: telebot.types.Message):
 
         quote, base, amount = values
         total_base = CryptoConverter.get_price(quote, base, amount)
-    except ConvertoinException as e:
+    except ConvertionException as e:
         bot.reply_to(message, f'Ошибка пользователя. \n {e}')
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду\n{e}')
     else:
 
-    text = f'Цена {amount} {quote} в {base} - {total_base}'
+        text = f'Цена {amount} {quote} в {base} - {total_base}'
     bot.send_message(message.chat.id, text)
 
-bot.polling(none_stop=True)
-# @bot.message_handler(content_types=['text', ])
-# def repeat(message: telebot.types.Message):
-#     bot.send_message(message.chat.id, "Что ты сказал? Ану, повтори! :-)")
-#
-# @bot.message_handler(content_types=['photo', ])
-# def repeat(message: telebot.types.Message):
-#     bot.reply_to(message, f'Nice mem XXD, {message.chat.username}')
+bot.polling()
